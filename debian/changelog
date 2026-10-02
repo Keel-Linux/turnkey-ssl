@@ -1,0 +1,17 @@
+turnkey-ssl (3.1.1+keel1) trixie; urgency=medium
+
+  * Build for Keel Linux, Debian 13.
+  * Ship no private key. Upstream installed share/cert.key, cert.pem and
+    dhparams.pem under /usr/share/turnkey-ssl and the postinst copied them
+    into /etc/ssl/private when absent, so every machine installed from the
+    package served the same key pair until something replaced it; images
+    built with it were withdrawn for exactly this. The three files and the
+    copy are gone; nothing in the package writes a key. The machine's own
+    cert.key, cert.pem and dhparams.pem are generated on the machine by
+    turnkey-make-ssl-cert --default (inithooks 15regen-sslcert at first
+    boot; keel-host-keys before any service reads them, since inithooks
+    2.3.6+keel14). The postinst keeps /etc/ssl/private at mode 700.
+  * tests/no-private-key.bats asserts that neither the tree nor the built
+    .deb carries a .key or .pem under share/; the package workflow runs it.
+
+ -- Keel Linux maintainers <admin@keellinux.org>  Fri, 02 Oct 2026 17:25:31 +0000

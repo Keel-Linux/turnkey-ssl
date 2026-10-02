@@ -1,15 +1,10 @@
 #!/bin/sh -e
 
-ETC=/etc/ssl/private
-SHARE=/usr/share/turnkey-ssl
-
-for _file in cert.key cert.pem dhparams.pem; do
-    if [ ! -f "$ETC/$_file" ]; then
-        cp $SHARE/$_file $ETC/
-    fi
-    chmod 400 $ETC/$_file
-done
-chmod 700 $ETC
+# No key is shipped or written here: the certificate, key and DH parameters
+# of a machine are generated on the machine, by turnkey-make-ssl-cert
+# --default, which inithooks runs at first boot (15regen-sslcert) and
+# keel-host-keys runs before any service reads them.
+chmod 700 /etc/ssl/private
 
 #DEBHELPER#
 

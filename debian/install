@@ -1,3 +1,2 @@
 etc                     /
-share/*                 /usr/share/turnkey-ssl/
 turnkey-make-ssl-cert   /usr/bin/
