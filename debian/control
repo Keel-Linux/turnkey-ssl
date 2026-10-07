@@ -1,7 +1,8 @@
 Source: turnkey-ssl
 Section: misc
 Priority: optional
-Maintainer: Jeremy Davis <jeremy@turnkeylinux.org>
+Maintainer: KeelLinux maintainers <admin@keellinux.org>
+Uploaders: Marcos Mendez <mendez.foto@gmail.com>
 Build-Depends:
  debhelper (>= 10),
 Standards-Version: 4.0.0
