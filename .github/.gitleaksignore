@@ -1,0 +1,7 @@
+# gitleaks false positives, by fingerprint. Each was read; none is a live secret.
+# TurnKey's placeholder certificate and key (CN=tkldev, 2015, expired 2025),
+# copied from common's sslcert overlay on 2023-06-08 and removed the next day
+# (c1e79fb); public in turnkeylinux/common for a decade, and every appliance
+# makes its own key at first boot. tests/no-private-key.bats keeps keys out.
+4c56a1beb4b405aba4cb51767956fbfd26a90bd8:etc/ssl/private/cert.key:private-key:1
+4c56a1beb4b405aba4cb51767956fbfd26a90bd8:etc/ssl/private/cert.pem:private-key:22
