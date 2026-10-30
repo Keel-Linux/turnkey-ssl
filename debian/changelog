@@ -3,8 +3,12 @@ turnkey-ssl (3.1.1+keel2) trixie; urgency=medium
   * Maintainer and Uploaders are the Keel Linux maintainers; the TurnKey
     Linux team asked not to be listed as maintainers of this fork. Their
     copyright and attribution are unchanged.
+  * turnkey-make-ssl-cert reads KEY_TYPE (rsa or ecdsa, default rsa),
+    RSA_BITS (default 2048) and KEY_PARAMS (the ECDSA curve, default
+    prime256v1). With none of them set, the key is RSA 2048, as before.
+    An other KEY_TYPE stops with an error (turnkey-ssl#6).
 
- -- Marcos Mendez <mendez.foto@gmail.com>  Wed, 07 Oct 2026 14:14:24 +0000
+ -- Marcos Mendez <mendez.foto@gmail.com>  Fri, 30 Oct 2026 13:45:00 +0000
 
 turnkey-ssl (3.1.1+keel1) trixie; urgency=medium
 
