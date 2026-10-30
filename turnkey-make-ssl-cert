@@ -325,8 +325,14 @@ fi
 # create the key and certificate.
 if [[ $DH_ONLY == false ]]; then
     info "Generating certificate and key files."
+    keyopt=()
+    case "${KEY_TYPE:-rsa}" in
+        ecdsa) keyopt=(-newkey ec -pkeyopt "ec_paramgen_curve:${KEY_PARAMS:-prime256v1}") ;;
+        rsa)   keyopt=(-newkey "rsa:${RSA_BITS:-2048}") ;;
+        *)     error_exit "KEY_TYPE must be rsa or ecdsa" ;;
+    esac
     if ! openssl req -sha256 -config "$TMPFILE" -new -x509 -days $days \
-            -nodes -out "$CERT" -keyout "$KEY" > "$TMPOUT" 2>&1; then
+            -nodes "${keyopt[@]}" -out "$CERT" -keyout "$KEY" > "$TMPOUT" 2>&1; then
         error_exit "Could not create certificate. Openssl output was:" "$TMPOUT"
     fi
 fi
