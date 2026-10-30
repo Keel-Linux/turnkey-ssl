@@ -4,7 +4,20 @@
 # of a machine are generated on the machine, by turnkey-make-ssl-cert
 # --default, which inithooks runs at first boot (15regen-sslcert) and
 # keel-host-keys runs before any service reads them.
-chmod 700 /etc/ssl/private
+#
+# The directory is closed to everyone but root, except that ssl-cert's group
+# keeps its search bit: ssl-cert ships it as root:ssl-cert 0710, and
+# PostgreSQL, a member of ssl-cert, reads the snakeoil key through it. A
+# plain `chmod 700` stopped PostgreSQL after every upgrade of this package
+# (inithooks#64); setting 0710 again also repairs a machine that 3.1.1+keel1
+# or keel2 left at 0700.
+SSL_PRIVATE_DIR=${SSL_PRIVATE_DIR:-/etc/ssl/private}
+SSL_CERT_GROUP=${SSL_CERT_GROUP:-ssl-cert}
+if [ "$(stat -c %G "$SSL_PRIVATE_DIR")" = "$SSL_CERT_GROUP" ]; then
+    chmod 0710 "$SSL_PRIVATE_DIR"
+else
+    chmod 0700 "$SSL_PRIVATE_DIR"
+fi
 
 #DEBHELPER#
 

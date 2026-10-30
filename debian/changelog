@@ -1,3 +1,16 @@
+turnkey-ssl (3.1.1+keel3) trixie; urgency=medium
+
+  * debian/postinst sets /etc/ssl/private to 0710 when its group is
+    ssl-cert, and to 0700 otherwise. It ran `chmod 700`, which removed the
+    search bit that ssl-cert ships, so every upgrade of turnkey-ssl stopped
+    PostgreSQL: "could not access private key file ssl-cert-snakeoil.key:
+    Permission denied", and 35pgsqlpass and 36pgsqlverify failed at first
+    boot (inithooks#64). Setting 0710 again also repairs a machine that
+    3.1.1+keel1 or keel2 left at 0700. tests/postinst-private-dir.bats
+    covers both groups, the repair and a missing directory.
+
+ -- Marcos Mendez <mendez.foto@gmail.com>  Fri, 30 Oct 2026 22:17:36 +0000
+
 turnkey-ssl (3.1.1+keel2) trixie; urgency=medium
 
   * Maintainer and Uploaders are the Keel Linux maintainers; the TurnKey
